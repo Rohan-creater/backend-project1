@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+import { log } from "console";
 import fs from "fs";
 
 cloudinary.config({
@@ -12,7 +13,10 @@ const uploadOnCloudinary = async (localFilePath) => {
     if (!localFilePath) return null;
     const response = await cloudinary.uploader.upload(localFilePath, { // upload file
       resource_type: "auto",
-    });                                                                //file uploaded
+    });
+    //file uploaded
+    console.log("file is uploaded to cloudinary: ", response.url);
+    
     return response;
   } catch (error) {
     fs.ulikeSync(localFilePath); // deletes failed upload form local system
