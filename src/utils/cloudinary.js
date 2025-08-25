@@ -16,10 +16,17 @@ const uploadOnCloudinary = async (localFilePath) => {
     });
     //file uploaded
     console.log("file is uploaded to cloudinary: ", response.url);
+
+    if (fs.existsSync(localFilePath)) {
+      fs.unlinkSync(localFilePath);
+    }
     
     return response;
   } catch (error) {
-    fs.ulikeSync(localFilePath); // deletes failed upload form local system
+    // delete only if file exists
+    if (fs.existsSync(localFilePath)) {
+      fs.unlinkSync(localFilePath);
+    }
     return null;
   }
 };
